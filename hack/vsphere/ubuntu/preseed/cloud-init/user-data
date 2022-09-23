@@ -1,0 +1,18 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    hostname: base-ubuntu-2004
+    password: "$6$zfG/pm2Ch4.q$46IPxj6vXjNEEXcayGguwWxY5pRW8MEbT2ztQPpEa/kk.VTeOdud4IpD9au2crIbQ3FK8iXYwQtpuO3cBMOsG0"
+    username: builder
+  ssh:
+    install-server: true
+  late-commands:
+  - "curtin in-target --target=/target -- bash -c 'echo \"builder ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers'"
+  - curtin in-target --target=/target -- lvresize -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+  - curtin in-target --target=/target -- resize2fs /dev/ubuntu-vg/ubuntu-lv
+  - curtin in-target --target=/target -- apt update           
+  - curtin in-target --target=/target -- apt upgrade -y
+  - curtin in-target --target=/target -- swapoff -a
+  - curtin in-target --target=/target -- sed -ri '/^\/swap.img\s/s/^#?/#/' /etc/fstab
+
