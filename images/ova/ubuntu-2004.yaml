@@ -1,0 +1,17 @@
+download_images: true
+build_name: "ubuntu-2004"
+packer_builder_type: "vsphere" 
+packer:
+  cluster: ""
+  datacenter: ""
+  datastore: ""
+  folder: ""
+  insecure_connection: "false"
+  network: ""
+  resource_pool: ""
+  template: "base-ubuntu-2004"
+  vsphere_guest_os_type: "ubuntu64Guest"
+  guest_os_type: "ubuntu-64"
+# goss params
+  distribution: "Ubuntu"
+  distribution_version: "20.04"
